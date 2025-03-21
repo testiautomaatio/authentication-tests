@@ -21,16 +21,12 @@ jobs:
     - name: Install Chromium browser
       run: npx playwright install chromium --with-deps
       timeout-minutes: 2
+    - name: Copy .env file
+      run: cp .github/.env.test .env
     - name: Run tests
       run: "npx playwright test --reporter=list,html --project=chromium --trace=on"
       timeout-minutes: 3
       continue-on-error: true
-      env:
-        # In real world, these would be defined in GitHub secrets
-        USER1_USERNAME: alice@example.com
-        USER1_PASSWORD: 'nUL9zA3q=Nt7\N,0?CL&c74U,Ic)0)dN'
-        USER2_USERNAME: bob@example.com
-        USER2_PASSWORD: '}3jc\xJnQ=E=+Q_y/%Hd311bW#6{_Oyj'
 
     - name: Extract traces
       run: "./.github/extract_traces.sh"
