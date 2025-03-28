@@ -10,7 +10,7 @@ Playwright suorittaa testejä rinnakkain ja suoritusten järjestys ei ole taattu
 >
 > https://playwright.dev/
 
-Tässä dokumentissa löytyy toteutettaviin testitapauksiin ja testattavaan sivustoon liittyvät tiedot, ja pääasiallinen materiaali testien kirjoittamiseksi löytyy [Playwrightin dokumentaatiosta](https://playwright.dev/docs/writing-tests). Tekstimuotoisen dokumentaation lisäksi voit hyödyntää lukuisia videoita ja tutoriaaleja, joita löytyy esimerkiksi Playwrightin [YouTube-kanavalta](https://www.youtube.com/c/PlaywrightTest/videos).
+Tässä dokumentissa löytyy toteutettaviin testitapauksiin ja testattavaan sivustoon liittyvät tiedot, ja pääasiallinen materiaali testien kirjoittamiseksi löytyy [Playwrightin dokumentaatiosta](https://playwright.dev/docs/writing-tests). Tekstimuotoisen dokumentaation lisäksi voit hyödyntää lukuisia videoita ja tutoriaaleja, joita löytyy esimerkiksi Playwrightin [YouTube-kanavalta](https://www.youtube.com/@Playwrightdev/videos).
 
 Suosittelemme tässä tehtävässä katsomaan videon [Generating Playwright Tests in VS Code](https://www.youtube.com/watch?v=LM4yqrOzmFE), jossa näytetään sekä testien "nauhoittamista" että elementtien paikallistamista sivulta hyödyntäen VS Code:n "Pick locator" -toimintoa.
 
