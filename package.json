@@ -1,10 +1,11 @@
 {
   "name": "authentication-tests",
+  "description": "Tämän tehtävän tarkoituksena on kirjoittaa ensimmäiset testit Playwright-työkalulla. Tavoitteina on oppia suorittamaan operaatioita sekä tarkastamaan niiden tuloksia.",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {},
   "devDependencies": {
-    "@playwright/test": "^1.51.0",
-    "@types/node": "^22.13.10"
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^22.18.12"
   }
 }

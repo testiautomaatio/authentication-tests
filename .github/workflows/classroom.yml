@@ -15,14 +15,21 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Disable man-db auto-update (prevents apt-get hangs)
+      run: sudo rm -f /var/lib/man-db/auto-update
+
     - name: Install dependencies
       run: npm install
       timeout-minutes: 2
+
     - name: Install Chromium browser
       run: npx playwright install chromium --with-deps
       timeout-minutes: 2
+
     - name: Copy .env file
       run: cp .github/.env.test .env
+
     - name: Run tests
       run: "npx playwright test --reporter=list,html --project=chromium --trace=on"
       timeout-minutes: 3
@@ -41,6 +48,7 @@ jobs:
         command: "./.github/find_trace.sh 'your@email.com'"
         timeout: 1
         max-score: 10
+
     - name: Login email is validated
       id: login-page-2
       uses: classroom-resources/autograding-command-grader@v1
@@ -50,6 +58,7 @@ jobs:
         command: "./.github/find_trace.sh 'Please enter a valid email address.'"
         timeout: 1
         max-score: 10
+
     - name: Login password is validated
       id: login-page-3
       uses: classroom-resources/autograding-command-grader@v1
@@ -59,6 +68,7 @@ jobs:
         command: "./.github/find_trace.sh 'Password must be at least 6 characters long.'"
         timeout: 1
         max-score: 10
+
     - name: Login rejects invalid credentials
       id: login-page-4
       uses: classroom-resources/autograding-command-grader@v1
@@ -68,6 +78,7 @@ jobs:
         command: "./.github/find_trace.sh 'Invalid email or password'"
         timeout: 1
         max-score: 10
+
     - name: Login accepts correct credentials
       id: login-page-5
       uses: classroom-resources/autograding-command-grader@v1
@@ -77,6 +88,7 @@ jobs:
         command: "./.github/find_trace.sh 'Successfully logged in'"
         timeout: 1
         max-score: 10
+
     - name: User can log out
       id: login-page-6
       uses: classroom-resources/autograding-command-grader@v1
@@ -86,6 +98,7 @@ jobs:
         command: "./.github/find_trace.sh 'You have been logged out.'"
         timeout: 1
         max-score: 10
+
     - name: Unauthenticated users cannot access /dashboard
       id: login-page-7
       uses: classroom-resources/autograding-command-grader@v1
@@ -106,6 +119,7 @@ jobs:
         command: "./.github/find_trace.sh 'name is required'"
         timeout: 1
         max-score: 10
+
     - name: Registration email is already in use
       id: register-page-2
       uses: classroom-resources/autograding-command-grader@v1
@@ -115,6 +129,7 @@ jobs:
         command: "./.github/find_trace.sh 'Email is already in use'"
         timeout: 1
         max-score: 10
+
     - name: Registration creates a new account
       id: register-page-3
       uses: classroom-resources/autograding-command-grader@v1
@@ -124,7 +139,6 @@ jobs:
         command: "./.github/find_trace.sh 'Account created successfully'"
         timeout: 1
         max-score: 10
-
 
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
