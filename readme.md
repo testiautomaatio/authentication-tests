@@ -1,3 +1,5 @@
+[English version of this readme is available in the file readme.en.md](./readme.en.md)
+
 # Ensimmäiset Playwright-testit 🎭
 
 Tämän tehtävän tarkoituksena on kirjoittaa ensimmäiset testit Playwright-työkalulla. Tehtävässä testataan yksinkertaisen web-sivuston toiminnallisuuksia, eli kirjautumista ja rekisteröitymistä. Tavoitteina on oppia suorittamaan operaatioita (actions) kuten tekstin syöttämistä ja painikkeiden painamista, sekä tarkastamaan (assert) tuloksia, kuten virheilmoituksia ja onnistumisviestejä.
