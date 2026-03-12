@@ -1,6 +1,6 @@
 {
   "name": "authentication-tests",
-  "description": "Tämän tehtävän tarkoituksena on kirjoittaa ensimmäiset testit Playwright-työkalulla. Tavoitteina on oppia suorittamaan operaatioita sekä tarkastamaan niiden tuloksia.",
+  "description": "The purpose of this task is to write the first tests with the Playwright tool. The goals are to learn how to perform operations and verify their results.",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {},
