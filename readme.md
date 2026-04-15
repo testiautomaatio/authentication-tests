@@ -56,12 +56,14 @@ Rekisteröityminen tällä lomakkeella luo uuden käyttäjätunnuksen, joka on v
 
 Kirjautuminen onnistuu osoitteessa https://authentication-6o1.pages.dev/. Kirjautumisen jälkeen käyttäjä ohjataan osoitteeseen https://authentication-6o1.pages.dev/dashboard, jossa näytetään tervetuloa-viesti. Kuten rekisteröityminen, myös kirjautuminen on voimassa vain saman istunnon sisällä.
 
-Itse luotavien tunnusten lisäksi sivustolla on kaksi valmista tunnusta, jotka ovat aina voimassa: `alice@example.com` ja `bob@example.com`:
+Itse luotavien tunnusten lisäksi sivustolla on valmiita tunnuksia, jotka ovat aina voimassa:
 
-| Name  | Username          | Password                           | Env variables in GitHub \*         |
-|-------|-------------------|------------------------------------|------------------------------------|
-| Alice | alice@example.com | `}3jc\xJnQ=E=+Q_y/%Hd311bW#6{_Oyj` | `USER1_USERNAME`, `USER1_PASSWORD` |
-| Bob   | bob@example.com   | `nUL9zA3q=Nt7\N,0?CL&c74U,Ic)0)dN` | `USER2_USERNAME`, `USER2_PASSWORD` |
+| Name     | Username             | Password                           | Env variables in GitHub \*         |
+|----------|----------------------|------------------------------------|------------------------------------|
+| Jane Doe | jane.doe@example.com | `ItWorksOnMyMac1!`                 | `JANE_USERNAME`, `JANE_PASSWORD`   |
+| John Doe | john.doe@example.com | `AllTestsPass1!`                   | `JOHN_USERNAME`, `JOHN_PASSWORD`   |
+| Alice    | alice@example.com    | `}3jc\xJnQ=E=+Q_y/%Hd311bW#6{_Oyj` | `ALICE_USERNAME`, `ALICE_PASSWORD` |
+| Bob      | bob@example.com      | `nUL9zA3q=Nt7\N,0?CL&c74U,Ic)0)dN` | `BOB_USERNAME`, `BOB_PASSWORD`     |
 
 Voit käyttää näitä tunnuksia niissä testitapauksissa, joissa tarvitset olemassa olevan käyttäjän kirjautumista tai rekisteröitymistä, tai haluat varmistaa, että samalla tunnuksella ei voi rekisteröityä uudelleen.
 
@@ -82,26 +84,31 @@ Johda seuraavista vaatimuksista testitapaukset ja kirjoita niille Playwright-tes
 
 ### Kirjautuminen
 
-* Palvelun etusivulla tulee olla kirjautumislomake, jossa on kentät sähköpostille ja salasanalle, sekä kirjautumisnappi.
-* Käyttäjä tulee ohjata onnistuneen kirjautumisen jälkeen osoitteeseen `/dashboard`, jossa näytetään tervetuloa-viesti.
-* Rekisteröityneen käyttäjän tulee voida kirjautua sisään sähköpostilla ja salasanalla.
-* Sekä käyttäjätunnus ja salasana ovat pakollisia, ja puuttuvista tiedoista tulee näyttää virheilmoitus.
-* Kirjautumisen tulee huomauttaa, mikäli käyttäjätunnus on väärässä muodossa tai salasana on liian lyhyt.
-* Kirjautumisen tulee estää kirjautumiset sekä tuntemattomalla käyttäjätunnuksella että väärällä salasanalla.
-
-Lisäksi:
-
-* Jos käyttäjä yrittää päästä suoraan `/dashboard`-sivulle ilman voimassa olevaa kirjautumista, hänet tulee ohjata takaisin kirjautumissivulle.
-* Kun kirjautunut käyttäjä kirjatuu ulos käyttäen "Logout" -painiketta, hänet tulee ohjata takaisin kirjautumissivulle.
+1. Palvelun etusivulla tulee olla kirjautumislomake, jossa on kentät sähköpostille ja salasanalle sekä kirjautumispainike
+2. Rekisteröity käyttäjä voi kirjautua sisään sähköpostilla ja salasanalla
+    * Kirjautuminen tulee olla kirjainkoosta riippumaton sähköpostikentälle, mutta salasanan kirjainkoon tulee olla täsmälleen oikein
+3. Onnistuneen kirjautumisen jälkeen käyttäjä ohjataan osoitteeseen `/dashboard`, jossa näytetään tervetuloa-viesti
+4. Kirjautumisen tulee estää luvaton pääsy
+    * Sekä sähköposti että salasana ovat pakollisia
+    * Puuttuvat tai virheelliset arvot tulee näyttää virheilmoituksina (virheellinen sähköposti tai salasanan pituus)
+    * Epäonnistunut kirjautuminen pitää käyttäjän kirjautumissivulla ja näyttää virheilmoituksen
+5. Käyttäjät eivät voi päästä suoraan osoitteeseen `/dashboard` ilman onnistunutta kirjautumista
+    * käyttäjä tulee ohjata takaisin kirjautumissivulle
+    * käyttäjälle tulee näyttää virheilmoitus
+6. Kun kirjautunut käyttäjä kirjautuu ulos, hänet ohjataan takaisin kirjautumissivulle
 
 
 ### Rekisteröityminen
 
-* Rekisteröitymiseen tulee päästä sekä suoraan `/signUp`-osoitteesta että etusivun "Sign up" -linkistä.
-* Nimi, sähköposti ja salasana ovat rekisteröitymisessä pakollisia.
-* Rekisteröitymisyritys jo rekisteröidyllä sähköpostilla näyttää virheilmoituksen.
-* Rekisteröityminen oikeilla tiedoilla luo tunnuksen, näyttää onnistumisviestin ja ohjaa kirjautumissivulle.
-* Rekisteröitymisessä luotua tiliä tulee voida käyttää kirjautumiseen heti rekisteröitymisen jälkeen (saman testitapauksen sisällä).
+1. Rekisteröityminen tulee olla mahdollista sekä suoraan osoitteessa `/signUp` että etusivun linkin kautta
+2. Nimi, sähköposti ja salasana ovat pakollisia rekisteröitymisessä
+    * Puuttuvat tai virheelliset tiedot tulee näyttää virheilmoituksina
+3. Rekisteröitymistä yritettäessä jo rekisteröidyllä sähköpostilla tulee näyttää virheilmoitus
+    * Rekisteröityminen on kirjainkoosta riippumaton sähköpostikentälle, joten vain kirjainkoosta poikkeavan sähköpostin käyttö ei voi johtaa onnistuneeseen rekisteröitymiseen
+4. Rekisteröityminen vaadituilla tiedoilla luo uuden käyttäjätilin
+    * Rekisteröitymisen jälkeen tulee näyttää onnistumisviesti
+    * Rekisteröitymisen jälkeen käyttäjä ohjataan kirjautumissivulle
+5. Rekisteröitymisessä luotu tili tulee olla käytettävissä kirjautumiseen heti sen jälkeen (saman selainistunnon sisällä)
 
 
 ### Ohjeita ja esimerkkejä
@@ -123,11 +130,12 @@ Parempi tapa käsitellä salasanoja voisi olla salaisuuksien tallentaminen ympä
 Suosittelemme tutustumaan ympäristömuuttujiin ja hyödyntämään niitä tässä tehtävässä. Voit lukea lisää ympäristömuuttujista [Playwrightin dokumentaatiosta (playwright.dev)](https://playwright.dev/docs/test-parameterize#env-files). Tiedostopohjaisia ympäristömuuttujia varten tarvitset lisäksi [dotenv-paketin](https://www.npmjs.com/package/dotenv), joka tulee ottaa käyttöön [playwright.config.ts](./playwright.config.ts)-tiedoston yläosassa.
 
 > [!NOTE]
-> Jotta ympäristömuuttujat toimivat myös automaattisessa arvioinnissa, niiden täytyy olla saavatavilla myös GitHub actions -ympäristössä. GitHub ja muut CI/CD-järjestelmät tarjoavat mahdollisuuden tallentaa salaisuuksia ja ympäristömuuttujia, joten voit käyttää niitä testien suorittamiseen myös automaattisessa arvioinnissa. Jos käytät ympäristömuuttujia testeissäsi, varmista että ne on määritelty samalla nimillä ja arvoilla kuin automaattisessa arvioinnissa:
+> Jotta muuttujat toimivat oikein sekä omassa kehitysympäristössäsi että GitHub actions -arvioinnissa, vain seuraavat ympäristömuuttujat ovat tuettuja:
 >
-> * Käyttäjän Alice ympäristömuuttujat: `USER1_USERNAME`, `USER1_PASSWORD`
-> * Käyttäjän Bob ympäristömuuttujat: `USER2_USERNAME`, `USER2_PASSWORD`
-
+> * `JANE_USERNAME` & `JANE_PASSWORD`
+> * `JOHN_USERNAME` & `JOHN_PASSWORD`
+> * `ALICE_USERNAME` & `ALICE_PASSWORD`
+> * `BOB_USERNAME` & `BOB_PASSWORD`
 
 
 ## Tehtävän automaattinen arviointi

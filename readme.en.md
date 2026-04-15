@@ -54,14 +54,16 @@ Registering with this form creates a new user account that is only valid within 
 
 Logging in can be done at https://authentication-6o1.pages.dev/. After logging in, the user is redirected to https://authentication-6o1.pages.dev/dashboard, where a welcome message is displayed. Like registration, login is also only valid within the same session.
 
-In addition to self-created credentials, the website has two ready-made accounts that are always valid: `alice@example.com` and `bob@example.com`:
+In addition to the temporary accounts you can create yourself, the site has predefined accounts that are always valid:
 
-| Name  | Username          | Password                           | Env variables in GitHub \*         |
-|-------|-------------------|------------------------------------|------------------------------------|
-| Alice | alice@example.com | `}3jc\xJnQ=E=+Q_y/%Hd311bW#6{_Oyj` | `USER1_USERNAME`, `USER1_PASSWORD` |
-| Bob   | bob@example.com   | `nUL9zA3q=Nt7\N,0?CL&c74U,Ic)0)dN` | `USER2_USERNAME`, `USER2_PASSWORD` |
+| Name     | Username             | Password                           | Env variables in GitHub \*         |
+|----------|----------------------|------------------------------------|------------------------------------|
+| Jane Doe | jane.doe@example.com | `ItWorksOnMyMac1!`                 | `JANE_USERNAME`, `JANE_PASSWORD`   |
+| John Doe | john.doe@example.com | `AllTestsPass1!`                   | `JOHN_USERNAME`, `JOHN_PASSWORD`   |
+| Alice    | alice@example.com    | `}3jc\xJnQ=E=+Q_y/%Hd311bW#6{_Oyj` | `ALICE_USERNAME`, `ALICE_PASSWORD` |
+| Bob      | bob@example.com      | `nUL9zA3q=Nt7\N,0?CL&c74U,Ic)0)dN` | `BOB_USERNAME`, `BOB_PASSWORD`     |
 
-You can use these credentials in test cases where you need to log in or register an existing user, or you want to ensure that you cannot register again with the same credentials.
+You can use these credentials in test cases where you need login or registration with an existing user, or where you want to verify that the same account cannot be registered again.
 
 \* *Read more about using environment variables at the end of this document.*
 
@@ -80,26 +82,30 @@ Derive test cases from the following requirements and write Playwright tests for
 
 ### Login
 
-* The service's front page must have a login form with fields for email and password, and a login button.
-* After successful login, the user should be redirected to `/dashboard`, where a welcome message is displayed.
-* A registered user must be able to log in with email and password.
-* Both username and password are required, and an error message should be displayed for missing information.
-* Login should warn if the username is in the wrong format or the password is too short.
-* Login must prevent logins with both unknown username and incorrect password.
-
-Additionally:
-
-* If a user tries to access the `/dashboard` page directly without a valid login, they should be redirected back to the login page.
-* When a logged-in user logs out using the "Logout" button, they should be redirected back to the login page.
-
+1. The service home page must contain a login form with fields for email and password, and a login button
+2. A registered user must be able to sign in with their email and password
+    * Login must be case-insensitive for the email field, but case-sensitive for the password field
+3. After successful login, the user must be redirected to `/dashboard`, where a welcome message is shown
+4. Login must prevent unauthorized access
+    * Both username and password are required
+    * Missing or invalid values must show error messages (invalid email or password length)
+    * Failed login attempts must keep the user on login page and show an error message
+5. Users can't access `/dashboard` directly without a valid login session
+    * they must be redirected back to the login page
+    * an error message needs to be shown
+6. When a logged-in user logs out using the "Logout" button, they are redirected back to the login page
 
 ### Registration
 
-* Registration should be accessible both directly from the `/signUp` address and from the "Sign up" link on the front page.
-* Name, email, and password are required for registration.
-* Attempting to register with an already registered email displays an error message.
-* Registration with correct information creates an account, displays a success message, and redirects to the login page.
-* An account created during registration should be usable for login immediately after registration (within the same test case).
+1. Registration must be accessible both directly via `/signUp` URL and through the home page "Sign up" link
+2. Name, email, and password are required for registration
+    * Missing or invalid values must show error messages
+3. A registration attempt with an already registered email must show an error message
+    * Registration is case-insensitive for the email field, so just changing the case of letters in the email should not allow registration to succeed
+4. Registration with valid data must create an account
+    * A success message needs to be shown
+    * The user must be redirected to the login page
+5. An account created during registration must be usable for login immediately afterward (within the same browser session)
 
 
 ### Instructions and Examples
@@ -121,11 +127,12 @@ A better way to handle passwords could be to store secrets in environment variab
 We recommend familiarizing yourself with environment variables and utilizing them in this assignment. You can read more about environment variables in [Playwright's documentation (playwright.dev)](https://playwright.dev/docs/test-parameterize#env-files). For file-based environment variables, you will also need the [dotenv package](https://www.npmjs.com/package/dotenv), which should be enabled at the top of the [playwright.config.ts](./playwright.config.ts) file.
 
 > [!NOTE]
-> For environment variables to work in automated grading as well, they must also be available in the GitHub actions environment. GitHub and other CI/CD systems provide the ability to store secrets and environment variables, so you can use them to run tests in automated grading as well. If you use environment variables in your tests, make sure they are defined with the same names and values as in automated grading:
+> To ensure variables work correctly in both your local development environment and GitHub Actions evaluation, only the following variables are supported:
 >
-> * User Alice environment variables: `USER1_USERNAME`, `USER1_PASSWORD`
-> * User Bob environment variables: `USER2_USERNAME`, `USER2_PASSWORD`
-
+> * `JANE_USERNAME` & `JANE_PASSWORD`
+> * `JOHN_USERNAME` & `JOHN_PASSWORD`
+> * `ALICE_USERNAME` & `ALICE_PASSWORD`
+> * `BOB_USERNAME` & `BOB_PASSWORD`
 
 
 ## Automated Grading of the Assignment
