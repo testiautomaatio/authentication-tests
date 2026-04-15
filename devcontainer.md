@@ -12,3 +12,33 @@ If installing Docker locally is not your preferred option, you can also use the 
 You can open the project in GitHub Codespaces by following [this guide](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository#creating-a-codespace). After opening the repository in GitHub, you can create a new codespace by clicking on the "Code" button on the repository's front page and selecting "Open with Codespaces". This will create a new codespace that uses the same development container configuration, so you will have the same tools and dependencies available as if you were running it locally. This can be a convenient option if you want to avoid installing Docker or if you want to work from different machines without having to set up the environment each time.
 
 Cloud based development environments are commercial services and may require a paid subscription. Be sure to check the pricing details of the service you choose to use. At the time of writing, GitHub Codespaces offers a free tier with limited hours of usage per month, and additional hours can be purchased if needed (see [docs.github.com](https://docs.github.com/en/billing/concepts/product-billing/github-codespaces)).
+
+
+## Tips, troubleshooting, and resources
+
+### Installing browser dependencies
+
+Inside a development container, Playwright browsers need to be installed with a `--with-deps` flag. This is because the development container is minimal and does not include all system dependencies required by browsers, for example fonts.
+
+> [!NOTE]
+> ```bash
+> npx playwright install chromium --with-deps
+> ```
+>
+> In this exercise, the [`postCreate.sh` script](./.devcontainer/postCreate.sh) takes care of installing the browsers with the necessary dependencies, so you don't need to run this command manually. However, if you need to install additional browsers or if you are using a different development container setup, remember to include the `--with-deps` flag when installing browsers with Playwright.
+
+
+### Opening the test report
+
+Opening the Playwright HTML report from your own browser might not work when the report is served from the development container. This happens because Playwright will only allow the local machine to access the report for security reasons. When the report is opened inside the container, your own operating system is technically a separate host, so it should not be able to connect.
+
+You can work around this by opening the report and setting the `--host` flag to listen to all interfaces, not just the local one. For example, you can run the following command in the terminal of the development container:
+
+> [!NOTE]
+> ```bash
+> npx playwright show-report --host 0.0.0.0
+> ```
+>
+> **⚠️ Security note**
+>
+> Binding to `0.0.0.0` exposes the report server to your network. Avoid doing this on untrusted networks unless you firewall it.
