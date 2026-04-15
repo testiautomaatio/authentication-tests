@@ -35,16 +35,9 @@ jobs:
     - name: Disable man-db auto-update (prevents apt-get hangs)
       run: sudo rm -f /var/lib/man-db/auto-update
 
-    - name: Install dependencies
-      run: npm install
-      timeout-minutes: 2
-
-    - name: Install Chromium browser
-      run: npx playwright install chromium --with-deps
-      timeout-minutes: 2
-
-    - name: Copy .env file
-      run: cp .github/.env.test .env
+    - name: Install dependencies using the devcontainer setup script
+      run: ./.devcontainer/postCreate.sh
+      timeout-minutes: 5
 
     - name: Run tests
       run: "npx playwright test --reporter=list,html --project=chromium --trace=on"
