@@ -19,6 +19,11 @@ Suosittelemme tässä tehtävässä katsomaan videon [Generating Playwright Test
 Jos et katsonut vielä edellisessä tehtävässä videota [Introduction to Playwright for End-to-End Testing with Debbie O'Brien (JS Drops, youtube.com)](https://youtu.be/lCb9JoZFpHI), suosittelemme katsomaan sen, jotta saat yleiskuvan Playwrightin ja sen työkalujen käytöstä.
 
 
+## Asennukset
+
+Tämän tehtävän suorittamiseksi tarvitset Playwright-työkalun vaatimat ohjelmistot, kuten [Node.js:n](https://nodejs.org/), sekä [testiselaimia](https://playwright.dev/docs/browsers). Mikäli haluat käyttää valmiiksi konfiguroitua kehitysympäristöä, voit hyödyntää tämän repositorion [development container -konfiguraatiota](./devcontainer.md), joka tarjoaa valmiin ympäristön eristettynä omasta käyttöjärjestelmästäsi. Kehityskontti voi olla kannattava vaihtoehto, jos haluat välttää asennusongelmat ja saada nopeasti käyttöön testausympäristön, joka on eristetty omasta koneestasi. 
+
+
 ## Tehtävän ja testauksen lähtökohdat
 
 Tässä tehtävässä oletetaan, että olet suorittanut aikaisemman tehtävän, jossa harjoiteltiin Playwright-projektin luontia ja asennusta sekä testien suorittamista. Jos et ole vielä tehnyt sitä, suosittelemme aloittamaan siitä. Testit voidaan suorittaa niin komentoriviltä, Visual Studio Code -editorista kuin Playwrightin UI-työkalusta, joten tiettyä tapaa ei ole erikseen määritelty.
@@ -26,8 +31,14 @@ Tässä tehtävässä oletetaan, että olet suorittanut aikaisemman tehtävän, 
 Tehtävärepositorio sisältää jo valmiiksi Playwright-projektin pohjan, jonka voit asentaa ja käynnistää seuraavasti:
 
 ```bash
+# asenna projektin riippuvuudet (ks. package.json):
 npm install
+
+# suorita testit kaikilla selaimilla:
 npx playwright test
+
+# tai vain tietyllä selaimella:
+npx playwright test --project=chromium
 ```
 
 Testien suorittaminen edellyttää myös selainten asentamista, minkä olet toivottavasti tehnyt jo aikaisemmassa tehtävässä. Tarvittaessa [asenna testiselain Playwrightin ohjeita seuraten](https://playwright.dev/docs/browsers).

@@ -17,6 +17,11 @@ For this assignment, we recommend watching the video [Generating Playwright Test
 If you haven't watched the video [Introduction to Playwright for End-to-End Testing with Debbie O'Brien (JS Drops, youtube.com)](https://youtu.be/lCb9JoZFpHI) in the previous assignment, we recommend watching it to get an overview of using Playwright and its tools.
 
 
+## Installations
+
+To run this assignment, you will need the software tools required by the Playwright tool, such as [Node.js](https://nodejs.org/) and [test browsers](https://playwright.dev/docs/browsers). If you want to use a pre-configured development environment, you can utilize the [development container configuration](./devcontainer.md) provided in this repository. This configuration offers a ready-to-use environment that is isolated from your local operating system. A development container can be an effective option if you want to avoid installation issues and quickly set up a testing environment that is independent of your local machine.
+
+
 ## Assignment and Testing Prerequisites
 
 This assignment assumes that you have completed the previous assignment, where you practiced creating and installing a Playwright project and running tests. If you haven't done it yet, we recommend starting with that. Tests can be run from the command line, the Visual Studio Code editor, or Playwright's UI tool, so no specific method is specified.
@@ -24,8 +29,14 @@ This assignment assumes that you have completed the previous assignment, where y
 The assignment repository already includes a Playwright project template, which you can install and run as follows:
 
 ```bash
+# install dependencies (see package.json):
 npm install
+
+# run tests on all browsers:
 npx playwright test
+
+# or only on a specific browser:
+npx playwright test --project=chromium
 ```
 
 Running tests also requires installing browsers, which you have hopefully already done in the previous assignment. If necessary, [install the test browser following Playwright's instructions](https://playwright.dev/docs/browsers).
