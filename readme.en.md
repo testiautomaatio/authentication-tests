@@ -19,7 +19,9 @@ If you haven't watched the video [Introduction to Playwright for End-to-End Test
 
 ## Installations
 
-To run this assignment, you will need the software tools required by the Playwright tool, such as [Node.js](https://nodejs.org/) and [test browsers](https://playwright.dev/docs/browsers). If you want to use a pre-configured development environment, you can utilize the [development container configuration](./devcontainer.md) provided in this repository. This configuration offers a ready-to-use environment that is isolated from your local operating system. A development container can be an effective option if you want to avoid installation issues and quickly set up a testing environment that is independent of your local machine.
+To complete this assignment, you will need the software tools required by the Playwright tool, such as [Node.js](https://nodejs.org/) and [test browsers](https://playwright.dev/docs/browsers). If you want to use a pre-configured development environment, you can utilize the [development container configuration](./devcontainer.md) provided in this repository. This configuration offers a ready-to-use environment that is isolated from your local operating system.
+
+A development container can be an effective and secure option if you want to avoid installation issues and quickly set up a testing environment that is independent of your local machine.
 
 
 ## Assignment and Testing Prerequisites

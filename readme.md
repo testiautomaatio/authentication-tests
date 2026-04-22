@@ -21,7 +21,9 @@ Jos et katsonut vielä edellisessä tehtävässä videota [Introduction to Playw
 
 ## Asennukset
 
-Tämän tehtävän suorittamiseksi tarvitset Playwright-työkalun vaatimat ohjelmistot, kuten [Node.js:n](https://nodejs.org/), sekä [testiselaimia](https://playwright.dev/docs/browsers). Mikäli haluat käyttää valmiiksi konfiguroitua kehitysympäristöä, voit hyödyntää tämän repositorion [development container -konfiguraatiota](./devcontainer.md), joka tarjoaa valmiin ympäristön eristettynä omasta käyttöjärjestelmästäsi. Kehityskontti voi olla kannattava vaihtoehto, jos haluat välttää asennusongelmat ja saada nopeasti käyttöön testausympäristön, joka on eristetty omasta koneestasi. 
+Tämän tehtävän suorittamiseksi tarvitset Playwright-työkalun vaatimat ohjelmistot, kuten [Node.js:n](https://nodejs.org/), sekä [testiselaimia](https://playwright.dev/docs/browsers). Mikäli haluat käyttää valmiiksi konfiguroitua kehitysympäristöä, voit hyödyntää tämän repositorion [development container -konfiguraatiota](./devcontainer.md), joka tarjoaa valmiin ympäristön eristettynä omasta käyttöjärjestelmästäsi.
+
+Kehityskontti voi olla kannattava ja turvallinen vaihtoehto, jos haluat välttää asennusongelmat ja saada nopeasti käyttöön testausympäristön, joka on eristetty omasta koneestasi.
 
 
 ## Tehtävän ja testauksen lähtökohdat
