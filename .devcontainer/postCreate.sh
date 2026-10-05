@@ -5,13 +5,16 @@
 # -o pipefail: In a pipeline, fail if any command in the pipeline fails (not just the last one).
 set -euo pipefail
 
-# install package dependencies:
+# Install Playwright and types:
 npm install
 
-# install the chromium browser for Playwright:
-npx playwright install chromium --with-deps
+# Install Playwright dependencies for chromium:
+npx playwright install-deps chromium
+
+# Install the Chromium browser:
+npx playwright install chromium
 
 # copy the .env file to the workspace root if one doesn't exist:
 if [ ! -f .env ]; then
-  cp ./.github/.env.test .env
+  cp ./.grading/.env.test .env
 fi

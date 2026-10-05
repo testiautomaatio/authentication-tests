@@ -44,6 +44,27 @@ npx playwright test --project=chromium
 Running tests also requires installing browsers, which you have hopefully already done in the previous assignment. If necessary, [install the test browser following Playwright's instructions](https://playwright.dev/docs/browsers).
 
 
+## UI tools and reports
+
+If you want to select individual tests to run and monitor their execution visually, you can use the VS Code extension or start Playwright's UI tool with the following command:
+
+```bash
+npx playwright test --ui
+```
+
+The latest test run's report can be displayed in your own browser with the following command:
+
+```bash
+npx playwright show-report
+```
+
+If necessary, allow the report to be viewed from outside the development container, from your main operating system's browser:
+
+```bash
+npx playwright show-report --host 0.0.0.0
+```
+
+
 ## Website to be Tested
 
 The testing target is the example website https://authentication-6o1.pages.dev/, which contains a small number of features for logging into the service and creating user accounts. The website has been designed to be both simple and high-quality, so that it would work well as a first testing target. In terms of quality, for example, the labels and error messages for different fields have been implemented so that they are easy to identify and handle programmatically in tests.
@@ -85,6 +106,11 @@ You can use these credentials in test cases where you need login or registration
 
 Once you have installed the project dependencies and tried out the website to be tested, you can start writing your own tests. In this assignment, the goal is to write test cases for website registration and login. You can write the tests either in one file or in separate files, depending on how you want to organize your test cases. Your files must follow Playwright's test file naming convention, meaning they must end with `.spec.ts` or `.spec.js`.
 
+The test files to be written in this assignment must end with `.spec.ts` or `.spec.js` so that Playwright recognizes them as test files. The assignment template has already created two test files where you can write your test cases:
+
+* [login.spec.ts](./tests/login.spec.ts)
+* [register.spec.ts](./tests/register.spec.ts)
+
 Run your own tests as you write them so you can ensure they work as expected. You can run the tests either individually or all at once depending on how you want to test them. You can also use Playwright's UI tool to run the tests if you want to follow the test execution visually.
 
 
@@ -125,7 +151,7 @@ Derive test cases from the following requirements and write Playwright tests for
 
 By writing these tests, the goal is to learn to perform various operations on page content using the features provided by Playwright. Read more about writing tests in [Playwright's documentation (playwright.dev)](https://playwright.dev/docs/writing-tests).
 
-If you want to explore examples of Playwright tests, we have added a [demo-todo-app.spec.ts](./tests-examples/demo-todo-app.spec.ts) file to this repository, which contains examples of using actions and assertions. You can use it as a reference when writing tests and apply its examples to your own test cases. If you want to run the tests in that file, you will need to move it first to the `tests` folder so that Playwright recognizes it as a test file. However, do not submit this example file in the tests directory to GitHub, so that the tests in it do not mix with your own solutions.
+If you want to explore examples of Playwright tests, we have added a [demo-todo-app.spec.ts](./tests/examples/demo-todo-app.spec.ts) file to this repository, which contains examples of using actions and assertions. You can use it as a reference when writing tests and apply its examples to your own test cases.
 
 > [!NOTE]
 > *demo-todo-app.spec.ts* is a Playwright example licensed under the [Apache 2.0 license](https://github.com/microsoft/playwright/blob/main/LICENSE). It has been included in this assignment as teaching and example material.
@@ -140,12 +166,17 @@ A better way to handle passwords could be to store secrets in environment variab
 We recommend familiarizing yourself with environment variables and utilizing them in this assignment. You can read more about environment variables in [Playwright's documentation (playwright.dev)](https://playwright.dev/docs/test-parameterize#env-files). For file-based environment variables, you will also need the [dotenv package](https://www.npmjs.com/package/dotenv), which should be enabled at the top of the [playwright.config.ts](./playwright.config.ts) file.
 
 > [!NOTE]
+>
+> In GitHub actions, there are predefined environment variables whose names and values that contain the example usernames and passwords. See an example of a working .env file for this assignment [here](./.grading/.env.test).
+>
 > To ensure variables work correctly in both your local development environment and GitHub Actions evaluation, only the following variables are supported:
 >
 > * `JANE_USERNAME` & `JANE_PASSWORD`
 > * `JOHN_USERNAME` & `JOHN_PASSWORD`
 > * `ALICE_USERNAME` & `ALICE_PASSWORD`
 > * `BOB_USERNAME` & `BOB_PASSWORD`
+>
+> Do not add your own .env file to version control. GitHub actions has predefined environment variables whose names and values match the ones listed above. Please ensure that they are defined with the same names and values as in the assignment, so that your tests work correctly in the automated evaluation.
 
 
 ## Automated Grading of the Assignment
@@ -155,10 +186,14 @@ Once you have written the test cases and verified that they work as expected, yo
 The automated review uses the Chrome browser and the tests are run one at a time in headless mode. We recommend ensuring that the tests work locally with the following command before submission:
 
 ```bash
-npx playwright test --reporter="list,html" --project=chromium
+npx playwright test --reporter="list,html" --project=chromium --grep-invert examples
 ```
 
-After submitting the assignment, your tests will be scored based on how well they validate the requirements listed above. It is therefore essential that you enter both correct and incorrect information in your tests and verify that the website state and the messages displayed on it work correctly. If necessary, review the actions tab report and test results so you can supplement your tests to cover more test cases. You can resubmit the assignment multiple times until the assignment deadline.
+After submitting the assignment, your tests will be scored based on how well they validate the requirements listed above.
+
+It is therefore essential that you enter both correct and incorrect information in your tests and verify that the website state and the messages displayed on it work correctly. If necessary, review the actions tab report and test results so you can supplement your tests to cover more test cases.
+
+You can resubmit the assignment multiple times until the assignment deadline.
 
 
 ## About the Material

@@ -46,9 +46,38 @@ npx playwright test --project=chromium
 Testien suorittaminen edellyttää myös selainten asentamista, minkä olet toivottavasti tehnyt jo aikaisemmassa tehtävässä. Tarvittaessa [asenna testiselain Playwrightin ohjeita seuraten](https://playwright.dev/docs/browsers).
 
 
+## UI-työkalu ja raportit
+
+Mikäli haluat valita itse suoritettavat testit yksitellen ja seurata niiden suoritusta graafisesti, voit käyttää VS Code -laajennosta tai käynnistää Playwrightin UI-työkalun komennolla:
+
+```bash
+npx playwright test --ui
+```
+
+Viimeisimmän testisuorituksen raportin saa näkyviin omaan selaimeen komennolla:
+
+```bash
+npx playwright show-report
+```
+
+Tarvittaessa salli raportin katsominen myös kehityskontin ulkopuolelta, pääkäyttöjärjestelmäsi selaimesta käsin:
+
+```bash
+npx playwright show-report --host 0.0.0.0
+```
+
+
 ## Testattava sivusto
 
 Testauksen kohteena toimii esimerkkisivusto https://authentication-6o1.pages.dev/, joka sisältää pienen määrän ominaisuuksia palveluun kirjautumiseksi ja käyttäjätunnusten luomiseksi. Sivusto on pyritty luomaan samalla yksinkertaiseksi, mutta myös laadukkaaksi, jotta se toimisi hyvänä ensimmäisenä testauskohteena. Laadun osalta esimerkiksi eri kenttien labelit ja virheilmoitukset on pyritty toteuttamaan niin, että niitä on helppo yksilöidä ja käsitellä ohjelmallisesti testeissä.
+
+Testattava esimerkkisivusto on toteutettu testauksen harjoittelua varten, joten se ei noudata kaikkia tavanomaisia tuotantokäytössä olevien web-sivustojen oletuksia. Suurimpana eroavaisuutena sivuston kautta tehdyt rekisteröitymiset ja kirjautumiset **ovat voimassa vain saman selaimen/istunnon sisällä**. Rekisteröitymiset ja kirjautumiset eivät siis säily eri selainten tai testitapausten välillä.
+
+Playwright suorittaa testejä rinnakkain ja suoritusten järjestys ei ole taattu, joten testiselain nollataan aina jokaisen testin alussa. Yhdessä testissä tekemäsi rekisteröityminen tai kirjautuminen ei siis ole voimassa enää seuraavissa testitapauksissa.
+
+> *"Playwright creates a browser context for each test. Browser context is equivalent to a brand new browser profile. This delivers full test isolation with zero overhead."*
+>
+> https://playwright.dev/
 
 Sivustoa on tarkoitus testata "black box" -mallilla, eli testien kirjoittamiseksi ei ole tarkoitus perehtyä sivuston lähdekoodiin tai verkkoliikenteeseen. HTML-rakenteiden tutkiminen on kuitenkin tarpeen, jotta saat suoritettua testeissä tarvitsemasi operaatiot tekstikentille ja painikkeille.
 
@@ -86,6 +115,11 @@ Voit käyttää näitä tunnuksia niissä testitapauksissa, joissa tarvitset ole
 ## Omien testien toteuttaminen
 
 Kun olet saanut projektin riippuvuudet asennettua ja kokeillut testauksen kohteena olevaa sivustoa, voit aloittaa omien testien kirjoittamisen. Tässä tehtävässä tavoitteena on kirjoittaa testitapaukset sivuston rekisteröitymiseen ja kirjautumiseen. Voit kirjoittaa testit joko yhteen tiedostoon tai eri tiedostoihin, riippuen siitä, miten haluat järjestää testitapauksesi. Tiedostojesi tulee noudattaa Playwrightin testitiedostojen nimeämiskäytäntöä, eli niiden tulee päättyä `.spec.ts`- tai `.spec.js`-päätteeseen.
+
+Tehtävässä kirjoitettavat testitiedostot tulee päättyä `.spec.ts`- tai `.spec.js`-päätteeseen, jotta Playwright tunnistaa ne testitiedostoiksi. Tehtäväpohjaan on luotu valmiiksi kaksi testitiedostoa, joihin voit kirjoittaa testitapauksia:
+
+* [login.spec.ts](./tests/login.spec.ts)
+* [register.spec.ts](./tests/register.spec.ts)
 
 Suorita omia testejäsi sitä mukaa, kun kirjoitat niitä, jotta voit varmistaa, että ne toimivat odotetusti. Voit suorittaa testit joko yksittäin tai kaikki kerralla riippuen siitä, miten haluat testata niitä. Voit myös käyttää Playwrightin UI-työkalua testien suorittamiseen, jos haluat seurata testien suoritusta visuaalisesti.
 
@@ -128,7 +162,7 @@ Johda seuraavista vaatimuksista testitapaukset ja kirjoita niille Playwright-tes
 
 Näiden testien kirjoittamisen myötä tavoitteena on oppia tekemään sivun sisällölle erilaisia toimenpiteitä hyödyntäen Playwrightin tarjoamia toimintoja. Lue lisää testien kirjoittamisesta [Playwrightin dokumentaatiosta (playwright.dev)](https://playwright.dev/docs/writing-tests).
 
-Mikäli haluat tutkia esimerkkejä Playwright-testeistä, olemme lisänneet tähän repositorioon valmiiksi [demo-todo-app.spec.ts](./tests-examples/demo-todo-app.spec.ts)-tiedoston, jossa on esimerkkejä toimintojen ja tarkastusten käytöstä. Voit käyttää sitä apuna testien kirjoittamisessa ja soveltaa sen esimerkkejä omiin testitapauksiisi. Jos haluat suorittaa kyseisen tiedoston testejä, joudut siirtämään sen ensin `tests`-kansioon, jotta Playwright tunnistaa sen testitiedostoksi. Älä kuitenkaan lähetä kyseistä esimerkkitiedostoa tests-hakemistossa GitHubiin, jotta siinä olevat testit eivät sekoitu omiin ratkaisuihisi.
+Mikäli haluat tutkia esimerkkejä Playwright-testeistä, olemme lisänneet tähän repositorioon valmiiksi [demo-todo-app.spec.ts](./tests/examples/demo-todo-app.spec.ts)-tiedoston, jossa on esimerkkejä toimintojen ja tarkastusten käytöstä.
 
 > [!NOTE]
 > *demo-todo-app.spec.ts* on Playwrightin esimerkki, joka on lisensoitu [Apache 2.0 -lisenssillä](https://github.com/microsoft/playwright/blob/main/LICENSE). Se on lainattu tähän tehtävään opetus- ja esimerkkimateriaaliksi.
@@ -143,12 +177,16 @@ Parempi tapa käsitellä salasanoja voisi olla salaisuuksien tallentaminen ympä
 Suosittelemme tutustumaan ympäristömuuttujiin ja hyödyntämään niitä tässä tehtävässä. Voit lukea lisää ympäristömuuttujista [Playwrightin dokumentaatiosta (playwright.dev)](https://playwright.dev/docs/test-parameterize#env-files). Tiedostopohjaisia ympäristömuuttujia varten tarvitset lisäksi [dotenv-paketin](https://www.npmjs.com/package/dotenv), joka tulee ottaa käyttöön [playwright.config.ts](./playwright.config.ts)-tiedoston yläosassa.
 
 > [!NOTE]
-> Jotta muuttujat toimivat oikein sekä omassa kehitysympäristössäsi että GitHub actions -arvioinnissa, vain seuraavat ympäristömuuttujat ovat tuettuja:
+> Jotta muuttujat toimivat oikein sekä omassa kehitysympäristössäsi että GitHub actions -arvioinnissa, voit käyttää vain samoja muuttujia, jotka on määritetty GitHub actionsissa. Esimerkin tässä tehtävässä toimivasta .env-tiedostosta löydät [täältä](./.grading/.env.test).
+>
+> Seuraavat ympäristömuuttujat ovat tuettuja tässä tehtävässä:
 >
 > * `JANE_USERNAME` & `JANE_PASSWORD`
 > * `JOHN_USERNAME` & `JOHN_PASSWORD`
 > * `ALICE_USERNAME` & `ALICE_PASSWORD`
 > * `BOB_USERNAME` & `BOB_PASSWORD`
+>
+> Älä lisää omaa .env-tiedostoasi versionhallintaan. GitHub actionsissa on valmiina ympäristömuuttujat, joiden nimet ja arvot vastaavat edellä esitettyjä. Varmista siis, että ne on määritelty samoilla nimillä ja arvoilla kuin tehtävänannossa, jotta testisi toimivat myös automaattisessa arvioinnissa.
 
 
 ## Tehtävän automaattinen arviointi
@@ -158,14 +196,18 @@ Kun olet kirjoittanut testitapaukset ja varmistanut, että ne toimivat odotetust
 Automaattisessa tarkastuksessa käytetään Chrome-selainta ja testit suoritetaan yksi kerrallaan headless-tilassa. Suosittelemme varmistamaan, että testit toimivat paikallisesti seuraavalla komennolla ennen palautusta:
 
 ```bash
-npx playwright test --reporter="list,html" --project=chromium
+npx playwright test --reporter="list,html" --project=chromium --grep-invert examples
 ```
 
-Palautettuasi tehtävän testisi pisteytetään sen mukaan, kuinka hyvin ne todentavat edellä listattuja vaatimuksia. On siis oleellista, että testeissäsi syötät sekä oikeita että virheellisiä tietoja ja tarkistat, että sivuston tila sekä siinä näkyvät viestit toimivat oikein. Tarvittaessa tutki actions-välilehden raporttia ja testituloksia, jotta voit täydentää testejäsi kattamaan lisää testitapauksia. Voit palauttaa tehtävän uudelleen useita kertoa tehtävän määräaikaan asti.
+Palautettuasi tehtävän testisi pisteytetään sen mukaan, kuinka hyvin ne todentavat edellä listattuja vaatimuksia.
+
+**On siis oleellista, että testeissäsi syötät sekä oikeita että virheellisiä tietoja ja tarkistat, että sivuston tila sekä siinä näkyvät viestit toimivat oikein**. Tarvittaessa tutki actions-välilehden raporttia ja testituloksia, jotta voit täydentää testejäsi kattamaan lisää testitapauksia.
+
+Voit palauttaa tehtävän uudelleen useita kertoa tehtävän määräaikaan asti.
 
 
 ## Materiaalista
 
 Tämän tehtävän on kehittänyt Teemu Havulinna ja se on lisensoitu [Creative Commons BY-NC-SA -lisenssillä](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
-Tehtävän luonnissa on luotu hyödyntämällä kielimalleja ja tekoälytyökaluja, kuten GitHub Copilot ja ChatGPT.
+Tehtävän luonnissa on hyödynnetty kielimalleja ja tekoälytyökaluja, kuten GitHub Copilot ja ChatGPT.
