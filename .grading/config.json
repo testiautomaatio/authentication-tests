@@ -44,7 +44,7 @@
         {
             "name": "Login username is case insensitive",
             "description": "Checks that a successful login was completed during your tests with an email address in a different case.",
-            "run": "./.github/find_trace.sh 'login-case-insensitive-email'",
+            "run": "./.grading/find_trace.sh 'login-case-insensitive-email'",
             "timeout": "15s",
             "score": 5
         },
@@ -93,7 +93,7 @@
         {
             "name": "Registration email is case insensitive",
             "description": "Checks whether the tests included a registration attempt with an email address in a different case than an existing account.",
-            "run": "./.github/find_trace.sh 'registration-case-insensitive-email-conflict'",
+            "run": "./.grading/find_trace.sh 'registration-case-insensitive-email-conflict'",
             "timeout": "15s",
             "score": 5
         }
