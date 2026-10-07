@@ -45,6 +45,9 @@ jobs:
       run: ./.devcontainer/postCreate.sh
       timeout-minutes: 5
 
+    - name: Copy .env file
+      run: cp .grading/.env.test .env
+
     - name: Run the example suite using autograder
       uses: ohjelmistokehitys/autograder@v0
       timeout-minutes: 3
